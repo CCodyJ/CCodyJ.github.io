@@ -1,5 +1,25 @@
+body {
+  background-image: url('/src/image/codepic.jpg');
+  background-size: fill;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .App {
   text-align: center;
+}
+
+.App-container {
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  padding: 20px;
+  margin-left: 350px;
+  margin-right: 350px;
+  margin-top: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 5px rgb(240, 255, 171);
+  border-radius: 8px;
 }
 
 
@@ -8,21 +28,88 @@ input {
   margin-right: 8px;
 }
 
+h1 {
+  font-size: 42px;
+  font-style: italic;
+  text-decoration: underline;
+  color:rgb(248, 254, 157) ;
+}
+
 ul {
   list-style: none;
+  padding: 0;
 }
 
 li {
   margin: 12px 0;
-}
-.deleteButton {
-  font-size: 10px;
-  margin-left: 8px;
- 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  color: wheat;
-  border-radius: 4px;
+}
 
+li.TodoItem {
+  border: none;
+  background-color: whitesmoke;
+  box-shadow: 0 3px 4px rgba(252, 220, 61, 0.2);
+}
+
+.message {
+  font-size: 24px;
+  color:  white;
+  font-style: italic;
+  background: linear-gradient(to right, #ff0000, #00ff00);}
+
+/* Buttons */
+
+.action-buttons {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.action-buttons span {
+  cursor: pointer;
+}
+
+.deleteButton,
+.completeButton {
+  font-size: 14px;
+  margin-left: 8px;
+  border: none;
+  color: rgb(22, 207, 6);
+  border-radius: 4px;
   padding-top: 4px;
   padding-bottom: 4px;
+  box-shadow: 0 2.8px 4px rgba(0, 0, 0, 0.2);
 }
+
+.deleteButton {
+  color: red;
+}
+
+li.TodoItem.completed {
+  background-color: rgb(191, 248, 191);
+}
+
+
+/* Progress Bar */
+
+
+.progress-bar-container {
+  width: calc(100% - 120px); 
+  height: 20px;
+  background-color: #eee;
+  border-radius: 10px;
+  margin: 60px auto 0;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #007bff;
+  border-radius: 10px;
+  transition: width 0.3s ease-in-out;
+}
+
