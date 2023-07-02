@@ -1,6 +1,10 @@
-import React from 'react';
+import React from "react";
+import { Box, IconButton } from "@chakra-ui/react";
+import { MdDelete, MdCheck } from "react-icons/md";
+import DateTimePicker from "./DateTimePicker";
 
-function TodoItem({ item, onDelete, onMarkCompleted }) {
+
+function TodoItem({ item, onDelete, onMarkCompleted, selectedDateTime, setSelectedDateTime }) {
   const handleDelete = () => {
     onDelete(item.id);
   };
@@ -9,24 +13,46 @@ function TodoItem({ item, onDelete, onMarkCompleted }) {
     onMarkCompleted(item.id);
   };
 
-  if (item.id === 'deleteAll') {
+  if (item.id === "deleteAll") {
     return null; // Render nothing for the deleteAll item
   }
 
+  const renderDateTimePicker = () => {
+    if (selectedDateTime !== null) {
+      return (
+        <DateTimePicker
+        selected={selectedDateTime}
+        onChange={date => setSelectedDateTime(date)}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
-    <li className={`TodoItem ${item.completed ? 'completed' : ''}`}>
-      <span>{item.value}</span>
-      <div className="action-buttons">
-        <button className="deleteButton" onClick={handleDelete}>
-          &#10006;
-        </button>
-        {!item.completed && (
-          <button className="completeButton" onClick={handleMarkCompleted}>
-            &#10004;
-          </button>
-        )}
-      </div>
-    </li>
+    <Box
+      as="li"
+      className={`TodoItem ${item.completed ? "completed" : ""}`}
+      display="flex"
+      alignItems="center"
+    >
+      <Box flex="1" px="4" py="2">
+        {item.value}
+      </Box>
+      {renderDateTimePicker()}
+      <IconButton
+        aria-label="Delete"
+        icon={<MdDelete />}
+        onClick={handleDelete}
+      />
+      {!item.completed && (
+        <IconButton
+          aria-label="Complete"
+          icon={<MdCheck />}
+          onClick={handleMarkCompleted}
+        />
+      )}
+    </Box>
   );
 }
 

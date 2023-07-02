@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './App.css';
-import TodoItem from './TodoItem';
-import ProgressBar from './Progress_bar';
-import CompletionMessage from './CompletionMessage';
+//import './App.css';
+import Card from './components/Card';
 
 function App() {
 
@@ -12,6 +10,7 @@ function App() {
 const [newItem, setNewItem] = useState("");
 const [items, setItems] = useState([]);
 const [progress, setProgress] = useState(0);
+
 
 // Callback hook - 'useCallback'
 
@@ -65,9 +64,10 @@ const addItem = () => {
   }
   
   const item = {
-    id:Math.floor(Math.random() * 1000),
+    id: Math.floor(Math.random() * 1000),
     value: newItem,
-    completed: false
+    completed: false,
+    selectedDateTime: null, 
   };
 
   setItems(oldList => [...oldList, item]);
@@ -109,53 +109,20 @@ function markItemCompleted(id) {
 
 const allCompleted = items.length > 0 && items.every(item => item.completed);
 
+// App component rendered on screen as card format
+
 return (
- <div className='App-container'>
-    <div className="App">
-      {/* 1. Header */}
-    <h1>Todo List</h1>
-
-    {/* 2. Input (input and button) */}
-      <input
-          type='text'
-          placeholder='What do you need to do..?'
-          value={newItem}
-          onChange={e => setNewItem(e.target.value)}
-          onKeyDown={e => {
-          if (e.key === 'Enter') {
-          addItem();
-        }
-      }}
+  <Card
+      newItem={newItem}
+      setNewItem={setNewItem}
+      items={items}
+      addItem={addItem}
+      deleteItem={deleteItem}
+      markItemCompleted={markItemCompleted}
+      deleteAllItems={deleteAllItems}
+      allCompleted={allCompleted}
+      progress={progress}
     />
-
-
-    <ul className='App'>
-      {items.map(item => (
-        
-          <TodoItem
-          key={item.id}
-          item={item}
-          onDelete={deleteItem}
-          onMarkCompleted={markItemCompleted}
-            />
-        ))}
-    </ul>
-
-         {/* Delete All button */}
-        {allCompleted && (
-          <button className="deleteAllButton" onClick={deleteAllItems}>
-            Delete All
-          </button>
-        )}
-    
-        {/* Progress bar */}
-        <ProgressBar bgcolor="#2196f3" progress={progress} height={20} />
-        
-        {/* Completion message */}
-        <CompletionMessage allCompleted={allCompleted} />
-        
-        </div>
-     </div> 
   );
 }
 

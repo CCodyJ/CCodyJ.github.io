@@ -1,17 +1,18 @@
 import React from 'react';
+import { Box, Text } from '@chakra-ui/react';
 
 const CompletionMessage = ({ allCompleted }) => {
     return (
-        <div className='CompletionMessage'>
+        <Box className='CompletionMessage'>
           {allCompleted && (
-            <p className='message'>
+            <Text className='message'>
               Hey you did it!! Great job!!{' '}
               <span role="img" aria-label="Party Steamer">
                 {'\uD83C\uDF89'}
               </span>
-            </p>
+            </Text>
           )}
-        </div>
+        </Box>
       );
     };
     
