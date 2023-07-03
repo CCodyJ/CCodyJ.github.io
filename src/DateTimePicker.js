@@ -16,7 +16,7 @@ const DateTimePicker = ({ selected, onChange }) => {
       timeFormat="HH:mm"
       timeIntervals={5}
       timeCaption="Time"
-      dateFormat="MMMM d, yyyy h:mm aa"
+      dateFormat="MMMM d, yyyy"
     />
   );
 };
