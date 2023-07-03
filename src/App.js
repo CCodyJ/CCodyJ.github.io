@@ -10,7 +10,7 @@ function App() {
 const [newItem, setNewItem] = useState("");
 const [items, setItems] = useState([]);
 const [progress, setProgress] = useState(0);
-
+const [selectedDateTime, setSelectedDateTime] = useState(null);
 
 // Callback hook - 'useCallback'
 
@@ -55,25 +55,25 @@ useEffect(() => {
 
 
 //Helper function
-
-
 const addItem = () => {
   if (!newItem) {
-    alert("Maybe you missed something?")
+    alert("Maybe you missed something?");
     return;
   }
-  
-  const item = {
-    id: Math.floor(Math.random() * 1000),
+
+  const newItemWithDateTime = {
+    id: Date.now(),
     value: newItem,
     completed: false,
-    selectedDateTime: null, 
+    selectedDateTime: selectedDateTime, // Use the selectedDateTime from App component
   };
 
-  setItems(oldList => [...oldList, item]);
+  setItems(prevItems => [...prevItems, newItemWithDateTime]);
   setNewItem("");
+  setSelectedDateTime(null); // Reset the selectedDateTime after adding the item
   updateProgress();
-}
+};
+
 
 function deleteItem(id) {
   const newArray= items.filter(item => item.id !== id);
@@ -122,6 +122,8 @@ return (
       deleteAllItems={deleteAllItems}
       allCompleted={allCompleted}
       progress={progress}
+      selectedDateTime={selectedDateTime}
+      setSelectedDateTime={setSelectedDateTime}
     />
   );
 }

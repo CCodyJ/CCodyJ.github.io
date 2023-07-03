@@ -1,10 +1,17 @@
 import React from "react";
 import { Box, IconButton } from "@chakra-ui/react";
 import { MdDelete, MdCheck } from "react-icons/md";
-import DateTimePicker from "./DateTimePicker";
 
 
-function TodoItem({ item, onDelete, onMarkCompleted, selectedDateTime, setSelectedDateTime }) {
+function TodoItem({
+  item,
+  onDelete,
+  onMarkCompleted,
+  selectedDateTime,
+
+}) {
+
+  console.log("Selected DateTime:", selectedDateTime);
   const handleDelete = () => {
     onDelete(item.id);
   };
@@ -17,18 +24,7 @@ function TodoItem({ item, onDelete, onMarkCompleted, selectedDateTime, setSelect
     return null; // Render nothing for the deleteAll item
   }
 
-  const renderDateTimePicker = () => {
-    if (selectedDateTime !== null) {
-      return (
-        <DateTimePicker
-        selected={selectedDateTime}
-        onChange={date => setSelectedDateTime(date)}
-        />
-      );
-    }
-    return null;
-  };
-
+  
   return (
     <Box
       as="li"
@@ -39,8 +35,8 @@ function TodoItem({ item, onDelete, onMarkCompleted, selectedDateTime, setSelect
       <Box flex="1" px="4" py="2">
         {item.value}
       </Box>
-      {renderDateTimePicker()}
-      <IconButton
+      <Box>{selectedDateTime && selectedDateTime.toString()}</Box>
+        <IconButton
         aria-label="Delete"
         icon={<MdDelete />}
         onClick={handleDelete}
