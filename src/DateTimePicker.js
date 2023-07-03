@@ -4,7 +4,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const DateTimePicker = ({ selected, onChange }) => {
   const handleDateTimeChange = (date) => {
-    onChange(date); // Pass the selected date and time to the onChange function
+    console.log("Selected DateTime:", date); 
+    onChange(date);
   };
 
   return (

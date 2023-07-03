@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Input, Button, ChakraProvider, VStack, Heading, Progress } from '@chakra-ui/react';
+import { Box, Input, Button, ChakraProvider } from '@chakra-ui/react';
 import TodoItem from '../TodoItem';
 import ProgressBar from '../Progress_bar';
 import CompletionMessage from '../CompletionMessage';
