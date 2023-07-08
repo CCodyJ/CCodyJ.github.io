@@ -13,10 +13,10 @@ const DateTimePicker = ({ selected, onChange }) => {
       selected={selected}
       onChange={handleDateTimeChange}
       showTimeSelect
-      timeFormat="HH:mm"
       timeIntervals={5}
-      timeCaption="Time"
       dateFormat="MMMM d, yyyy"
+      minDate={new Date()}
+      timeFormat='h:m a'
     />
   );
 };

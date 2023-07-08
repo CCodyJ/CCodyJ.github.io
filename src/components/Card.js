@@ -5,8 +5,8 @@ import ProgressBar from '../Progress_bar';
 import CompletionMessage from '../CompletionMessage';
 import CardStyle from './CardStyle';
 import DateTimePicker from '../DateTimePicker';
-import { showNotification, requestNotificationPermission } from './DesktopNotification';
-
+import AlertSetup from './DesktopNotification';
+import { showNotification } from './DesktopNotification';
 
 const Card = () => {
 const [items, setItems] = useState([]);
@@ -14,22 +14,33 @@ const [newItem, setNewItem] = useState("");
 const [progress, setProgress] = useState(0);
 const [selectedDateTime, setSelectedDateTime] = useState(null);
 
+
 // Notification 
 
-useEffect(() => {
-  requestNotificationPermission();
-}, []);
 
 useEffect(() => {
   items.forEach((item) => {
     if (
       item.selectedDateTime &&
-      new Date(item.selectedDateTime) - new Date() <= 5 * 60 * 1000
+      !item.notificationSent && // Check if notification has not been sent
+      !item.completed && // Check if the item is not already completed
+      new Date(item.selectedDateTime) <= new Date() &&
+      new Date() - new Date(item.selectedDateTime) <= 5 * 60 * 1000
     ) {
+      // Trigger the alert/notification
       showNotification('Todo Reminder', `Task "${item.value}" is due soon!`);
+
+      // Update the item's notificationSent property to true
+      setItems((prevItems) =>
+        prevItems.map((prevItem) =>
+          prevItem.id === item.id
+            ? { ...prevItem, notificationSent: true }
+            : prevItem
+        )
+      );
     }
   });
-}, [items]);
+}, [items, showNotification]);
 
 
 
@@ -95,7 +106,8 @@ function markItemCompleted(id) {
       if (item.id === id) {
         return {
           ...item,
-          completed: true
+          completed: true,
+          notificationSent: true, //Prevent further notifs if completed
         };
       }
       return item;
@@ -146,7 +158,8 @@ const allCompleted = items.length > 0 && items.every(item => item.completed);
       value: newItem,
       completed: false,
       selectedDateTime: selectedDateTime,
-    };
+      notificationSent: false,
+      };
 
     setItems(prevItems => [...prevItems, newItemWithDateTime]);
     setNewItem("");
@@ -158,8 +171,8 @@ const allCompleted = items.length > 0 && items.every(item => item.completed);
     <ChakraProvider theme={CardStyle}>
       <Box className='App-container'>
         <Box className="App">
-          <h1>Todo List</h1>
-
+          <h1>Todays List!</h1>
+          <AlertSetup items={items} showNotification={showNotification} />
           <Input
             type='text'
             placeholder='What do you need to do..?'

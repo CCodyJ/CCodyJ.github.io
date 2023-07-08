@@ -25,6 +25,17 @@ function TodoItem({
     return null; // Render nothing for the deleteAll item
   }
 
+  const formattedDate = new Date(selectedDateTime).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+  
+  const formattedTime = new Date(selectedDateTime).toLocaleTimeString(undefined, {
+    hour: "numeric",
+    minute: "numeric"
+  });
+
   
   return (
     <Box
@@ -36,7 +47,12 @@ function TodoItem({
       <Box flex="1" px="4" py="2">
         {item.value}
       </Box>
-      <Box>{selectedDateTime && selectedDateTime.toString()}</Box>
+      <Box>{formattedDate}</Box>
+
+      {/* Space bar, dont trip */}
+      <Box>&nbsp;</Box>
+      
+      <Box>{formattedTime}</Box>
         <IconButton
         aria-label="Delete"
         icon={<MdDelete />}
