@@ -8,6 +8,15 @@ import DateTimePicker from '../DateTimePicker';
 import AlertSetup from './DesktopNotification';
 import { showNotification } from './DesktopNotification';
 
+function filterTasksByDate(tasks, currentDate) {
+  const filteredTasks = tasks.filter((task) => {
+    const taskDate = new Date(task.selectedDateTime).toLocaleDateString();
+    return taskDate === currentDate;
+  });
+
+  return filteredTasks;
+}
+
 const Card = () => {
 const [items, setItems] = useState([]);
 const [newItem, setNewItem] = useState("");
@@ -126,7 +135,12 @@ const allCompleted = items.length > 0 && items.every(item => item.completed);
   
 
   const renderItems = () => {
-    return items.map((item) => {
+    const currentDate = new Date().toLocaleDateString();
+    const filteredTasks = filterTasksByDate(items, currentDate);
+
+
+
+    return filteredTasks.map((item) => {
       console.log("Item:", item);
       return (
         <TodoItem
@@ -138,7 +152,9 @@ const allCompleted = items.length > 0 && items.every(item => item.completed);
           setSelectedDateTime={(date) => {
           setItems((prevItems) =>
           prevItems.map((prevItem) =>
-          prevItem.id === item.id ? { ...prevItem, selectedDateTime: date } : prevItem 
+          prevItem.id === item.id 
+          ? { ...prevItem, selectedDateTime: date } 
+          : prevItem 
               )
             )
           }}

@@ -21,13 +21,16 @@ function TodoItem({
     onMarkCompleted(item.id);
   };
 
-const currentDate = new Date().toLocaleDateString();
-const selectedDate = new Date(selectedDateTime).toLocaleDateString();
+// const currentDate = new Date().toLocaleDateString();
+// const selectedDate = new Date(selectedDateTime).toLocaleDateString();
 
-  if (item.id === "deleteAll" ||  currentDate !== selectedDate) {
+  // if (item.id === "deleteAll" ||  currentDate !== selectedDate) {
+  //   return null; // Render nothing for the deleteAll item
+  //   // Hide the item if the selected date is in the future
+  // }
+  if (item.id === "deleteAll") {
     return null; // Render nothing for the deleteAll item
-    // Hide the item if the selected date is in the future
-  }
+    }
 
   const formattedDate = new Date(selectedDateTime).toLocaleDateString(undefined, {
     year: "numeric",
